@@ -1,0 +1,44 @@
+.market-info {
+    &__cover {
+        position: relative;
+    }
+
+    &__share {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        display: inline-flex;
+        color: var(--tg-theme-link-color);
+        background-color: var(--tg-theme-secondary-bg-color);
+        border: none;
+        border-radius: 12px;
+        padding: 6px;
+        cursor: pointer;
+    }
+
+    &__header {
+        padding: 0.75rem 1rem;
+
+        &_title {
+            display: flex;
+            align-items: center;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500;
+            font-size: 1.25rem;
+            color: var(--tg-theme-text-color);
+
+            &__icon {
+                color: var(--tg-theme-hint-color);
+                margin-left: 0.25rem;
+            }
+        }
+
+        &_desc {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 400;
+            font-size: 0.875rem;
+            color: var(--tg-theme-hint-color);
+            margin-top: 0.25rem;
+        }
+    }
+}
