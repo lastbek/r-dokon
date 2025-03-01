@@ -1,14 +1,14 @@
 import React from 'react'
+import clsx from 'clsx'
 import './IconButton.scss'
 
-export interface IconButtonProps {
+export interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   icon: React.ReactElement
-  onClick: () => void
 }
 
-export const IconButton = ({ icon, onClick }: IconButtonProps) => {
+export const IconButton = ({ icon, className, ...props }: IconButtonProps) => {
   return (
-    <button className="IconButton" onClick={onClick}>
+    <button className={clsx("icon-button", className)} {...props}>
       {icon}
     </button>
   )

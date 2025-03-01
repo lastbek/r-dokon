@@ -1,0 +1,1 @@
+export { MarketProduct } from './ui/MarketProduct'

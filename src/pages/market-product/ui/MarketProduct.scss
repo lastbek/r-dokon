@@ -1,0 +1,114 @@
+.market-product {
+    &__content {
+        padding: 0.75rem 1rem;
+    }
+
+    &__title {
+        font-weight: 500;
+        font-size: 1.5rem;
+        line-height: 1.5rem;
+        color: var(--tg-theme-text-color);
+    }
+
+    &__slide {
+        width: 100%;
+        height: 250px;
+    }
+
+    &__image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    &__price {
+        margin-top: 0.5rem;
+        padding: 1rem;
+        border: 1px solid var(--tg-theme-section-separator-color);
+        border-radius: 0.75rem;
+    }
+
+    &__current-price {
+        color: var(--tg-theme-destructive-text-color);
+        font-size: 1.5rem;
+        font-weight: 500;
+    }
+
+    &__discount-rate {
+        border: 1px solid var(--tg-theme-destructive-text-color);
+        color: var(--tg-theme-destructive-text-color);
+        font-size: 0.875rem;
+        font-weight: 500;
+        border-radius: 0.25rem;
+        padding: 0.125rem 0.25rem;
+        margin-left: 0.75rem;
+    }
+
+    &__old-price {
+        text-decoration: line-through;
+        color: var(--tg-theme-hint-color);
+        font-size: 1rem;
+        font-weight: 400;
+        margin-top: 0.25rem;
+    }
+
+    &__size-title {
+        color: var(--tg-theme-text-color);
+        font-size: 1rem;
+        font-weight: 500;
+        margin: 0.5rem 0;
+    }
+
+    &__size-buttons {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    &__size-button {
+        color: var(--tg-theme-text-color);
+        background-color: var(--tg-theme-bg-color);
+        font-size: 1rem;
+        font-weight: 400;
+        border: 2px solid var(--tg-theme-secondary-bg-color);
+        border-radius: 0.25rem;
+        padding: 0.25rem 0.5rem;
+        cursor: pointer;
+    }
+
+    &__size-button--active {
+        color: var(--tg-theme-text-color);
+        background-color: var(--tg-theme-bg-color);
+        border: 2px solid var(--tg-theme-button-color);
+    }
+
+    &__description {
+        margin-top: 1rem;
+    }
+
+    &__description_title {
+        color: var(--tg-theme-text-color);
+        font-size: 1rem;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+
+    &__description_text {
+        color: var(--tg-theme-hint-color);
+        font-size: 0.875rem;
+        font-weight: 400;
+    }
+
+    &__feedback-btn {
+        color: #ffffff;
+        background-color: var(--tg-theme-button-color);
+        border-radius: 100%;
+        padding: 1rem;
+        border: none;
+        cursor: pointer;
+        display: inline-flex;
+        position: fixed;
+        bottom: 1rem;
+        right: 1rem;
+    }
+}
