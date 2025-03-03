@@ -5,7 +5,8 @@ import mkcert from 'vite-plugin-mkcert'
 // https://vite.dev/config/
 export default defineConfig({
   server: {
-    https: true
+    https: true,
+    host: true
   },
   resolve: {
     alias: {

@@ -5,6 +5,7 @@ import { ShareButton } from "@/entities/share-button"
 import { useEffect } from "react"
 
 export const MarketMain = () => {
+
   useEffect(() => {
     // @ts-ignore
     window.Telegram.WebApp.BackButton.hide()
