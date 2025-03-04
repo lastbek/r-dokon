@@ -8,13 +8,69 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation } from "@tanstack/react-query"
 import { simpleLoginRequest } from "@/shared/api/simple-login"
 import './MarketMain.scss'
+import axios from "axios"
 
 export const MarketMain = () => {
-
   const navigate = useNavigate()
   const tgWebApp = useTelegramWebApp();
+  
+  const BOT_TOKEN = '6368492553:AAHOZlfW440O9Hmlya-RcyD4p9PrRZeAxxA';
+  const API_URL = `https://api.telegram.org/bot${BOT_TOKEN}/savePreparedInlineMessage`;
 
-  console.log('Your telegram WebApp version:', tgWebApp?.initDataUnsafe?.start_param)
+  const prepareMessage = async () => {
+
+    const inlineQueryResult = {
+      type: 'article',
+      id: '2902940233',
+      title: 'Sample Title',
+      input_message_content: {
+        message_text: 'This is the content of the message to be shared.',
+      },
+    };
+    try {
+      const inlineMessageContent = {
+        user_id: tgWebApp.initDataUnsafe?.user?.id,
+        result: inlineQueryResult,
+        allow_user_chats: true,
+        allow_group_chats: true
+      };
+  
+      const response = await axios.post(API_URL, JSON.stringify(inlineMessageContent), {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (response.data.ok) {
+        const msg_id = response.data.result.id;
+        return msg_id;
+      } else {
+        console.error('Error preparing message:', response.data.description);
+      }
+    } catch (error) {
+      console.error('Axios error:', error);
+    }
+  };
+
+  const sharePreparedMessage = async () => {
+    const msg_id = await prepareMessage();
+    console.log(msg_id);
+  
+    if (msg_id) {
+      if (window.Telegram.WebApp.shareMessage) {
+        window.Telegram.WebApp.shareMessage(msg_id, (success: boolean) => {
+          if (success) {
+            console.log('Message shared successfully.');
+          } else {
+            console.log('Message sharing failed.');
+          }
+        });
+      } else {
+        console.log('shareMessage method is not available.');
+      }
+    }
+  };
+
   useEffect(() => {
     tgWebApp?.BackButton.hide()
 
@@ -33,26 +89,32 @@ export const MarketMain = () => {
     }
   }, [])
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isPending, data } = useMutation({
     mutationKey: ['simple-login'],
     mutationFn: simpleLoginRequest,
     onSuccess: (data) => {
       console.log(data)
     }
   })
+
+  // console.log(tgWebApp?.savePreparedInlineMessage());
+  
   return (
     <div className="market-main">
       {isPending ? <p>Loading...</p> :
         <>
-        <MarketInfo shareButton={<ShareButton />} />
+        <button onClick={sharePreparedMessage}>click</button>
+        <MarketInfo data={data?.market} shareButton={<ShareButton />} />
         <div style={{padding: '1rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem'}}>
-          <ProductPreviewCard />
-          <ProductPreviewCard />
-          <ProductPreviewCard />
-          <ProductPreviewCard />
+          {data?.products.map((product: any) => (
+            <ProductPreviewCard key={product.id} product={product} />
+          ))}
         </div>
         <div style={{width: '100%', height: 180}}></div>
-        <MarketContactFooter />
+          <MarketContactFooter 
+            contactTelegramLink={data?.market?.contactTelegramLink} 
+            ownerTelegramChannelLink={data?.market?.ownerTelegramChannelLink} 
+          />
         </>
       }
     </div>
