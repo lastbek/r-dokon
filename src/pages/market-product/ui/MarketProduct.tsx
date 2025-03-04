@@ -5,9 +5,23 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import './MarketProduct.scss';
 import { Pagination } from 'swiper/modules';
+import { useProductStore } from "@/shared/stores/useProductStore";
+import { isEmpty, isNull } from 'lodash';
+import { calculateDiscountPercentage } from "@/shared/helpers/calculate-discount-percentage";
 
 export const MarketProduct = () => {
     const navigate = useNavigate();
+    const product = useProductStore((state: any) => state.product)
+
+    useEffect(() => {
+        if (isEmpty(product)) {
+            navigate(-1);
+        }
+
+        console.log(product);
+        
+    }, [product]);
+    
 
     useEffect(() => {
         // @ts-ignore
@@ -26,64 +40,52 @@ export const MarketProduct = () => {
                 modules={[Pagination]}
                 className="market-product__swiper"
             >
-                <SwiperSlide className="market-product__slide">
-                    <img
-                        src="https://raqamli-dokon-mahsulotlar.s3.eu-north-1.amazonaws.com/product_3253_1739070294022.jpg"
-                        alt="Product 1"
-                        className="market-product__image"
-                    />
-                </SwiperSlide>
-                <SwiperSlide className="market-product__slide">
-                    <img
-                        src="https://raqamli-dokon-mahsulotlar.s3.eu-north-1.amazonaws.com/product_1038356288_1738492836674.jpg"
-                        alt="Product 2"
-                        className="market-product__image"
-                    />
-                </SwiperSlide>
-                <SwiperSlide className="market-product__slide">
-                    <img
-                        src="https://raqamli-dokon-mahsulotlar.s3.eu-north-1.amazonaws.com/product_304615896_1738492836474.jpg"
-                        alt="Product 3"
-                        className="market-product__image"
-                    />
-                </SwiperSlide>
-                <SwiperSlide className="market-product__slide">
-                    <img
-                        src="https://raqamli-dokon-mahsulotlar.s3.eu-north-1.amazonaws.com/product_914935065_1738492836775.jpg"
-                        alt="Product 4"
-                        className="market-product__image"
-                    />
-                </SwiperSlide>
+                {product?.images?.map((image: string, index: number) => (
+                    <SwiperSlide key={index} className="market-product__slide">
+                        <img
+                            src={image}
+                            alt={`Product ${index + 1}`}
+                            className="market-product__image"
+                        />
+                    </SwiperSlide>
+                ))}
             </Swiper>
             <div className="market-product__content">
-                <p className="market-product__title">Blood and Venom</p>
-                <div className="market-product__price">
-                    <div className="market-product__price-discount">
-                        <span className="market-product__current-price">135,000 som</span>
-                        <span className="market-product__discount-rate">-10%</span>
+                <p className="market-product__title">{product?.title}</p>
+                <div className="market-product__info">
+                    <div className="market-product__price">
+                        {isNull(product?.discountPrice) ? (
+                            <span>{product?.price} som</span>
+                        ) : (
+                            <>
+                                <div className="market-product__price-discount">
+                                <span className="market-product__current-price">{product?.discountPrice} som</span>
+                                {isNull(product?.discountPrice) ? null : (
+                                    <span className="market-product__discount-rate">-{calculateDiscountPercentage(product.price, product.discountPrice)}%</span>
+                                )}
+                            </div>
+                            <p className="market-product__old-price">{product?.price} som</p>
+                            </>
+                        )}
+                        
                     </div>
-                    <p className="market-product__old-price">150,000 som</p>
                     <div className="market-product__size-options">
-                        <p className="market-product__size-title">O'lchamlari</p>
-                        <div className="market-product__size-buttons">
-                            <button className="market-product__size-button market-product__size-button--active">1 item</button>
-                            <button className="market-product__size-button">2 + 1 FREE</button>
-                            <button className="market-product__size-button">3 + 2 FREE</button>
-                        </div>
+                            {product?.options?.map((option: any) => (
+                                <div key={option?.id}>
+                                    <p className="market-product__size-title">{option.title}</p>
+                                    <div className="market-product__size-buttons">
+                                        {option?.options?.map((nestedOption: any) => (
+                                            <button className="market-product__size-button market-product__size-button--active">{nestedOption.title}</button>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
                     </div>
                 </div>
                 <div className="market-product__description">
                     <p className="market-product__description_title">Mahsulot haqida</p>
                     <p className="market-product__description_text">
-                        New formula – Now already pre-mixed
-                        Enzyme-based cleaner – Tedious cleaning is a thing of the past!
-                        Quickly and reliably removes dirt
-                        Cleans in kitchen, bathroom, and WC
-                        Also suitable for stubborn residue, lime stains, burnt-on grime, or carpet stains
-                        Car seats, the headliner, the trim, and even paint and rims are reliably cleaned
-                        Content per bottle: 500 ml
-                        Made in Germany
-                        Delivery includes: Bottle with spray head
+                        {product?.description}
                     </p>
                 </div>
                 <button className="market-product__feedback-btn">

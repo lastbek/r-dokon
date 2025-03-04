@@ -21,11 +21,17 @@
         object-fit: cover;
     }
 
-    &__price {
+    &__info {
         margin-top: 0.5rem;
         padding: 1rem;
         border: 1px solid var(--tg-theme-section-separator-color);
         border-radius: 0.75rem;
+    }
+
+    &__price {
+        color: var(--tg-theme-text-color);
+        font-size: 1.5rem;
+        font-weight: 500;
     }
 
     &__current-price {
@@ -97,6 +103,9 @@
         color: var(--tg-theme-hint-color);
         font-size: 0.875rem;
         font-weight: 400;
+        white-space: pre-line;
+        line-height: 1rem;
+        letter-spacing: 0.5px;
     }
 
     &__feedback-btn {

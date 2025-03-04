@@ -13,9 +13,8 @@ import axios from "axios"
 export const MarketMain = () => {
   const navigate = useNavigate()
   const tgWebApp = useTelegramWebApp();
-  
-  const BOT_TOKEN = '6368492553:AAHOZlfW440O9Hmlya-RcyD4p9PrRZeAxxA';
-  const API_URL = `https://api.telegram.org/bot${BOT_TOKEN}/savePreparedInlineMessage`;
+
+  const API_URL = `https://api.telegram.org/bot${import.meta.env.VITE_BOT_TOKEN}/savePreparedInlineMessage`;
 
   const prepareMessage = async () => {
 
@@ -96,15 +95,12 @@ export const MarketMain = () => {
       console.log(data)
     }
   })
-
-  // console.log(tgWebApp?.savePreparedInlineMessage());
   
   return (
     <div className="market-main">
-      {isPending ? <p>Loading...</p> :
+      {isPending ? <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', width: '100%'}}><img src="https://i.pinimg.com/originals/c4/3b/2d/c43b2d56b4ec611ac450e6782f7143b7.gif" alt="" style={{width: '100%', height: '100vh'}} /></div> :
         <>
-        <button onClick={sharePreparedMessage}>click</button>
-        <MarketInfo data={data?.market} shareButton={<ShareButton />} />
+        <MarketInfo data={data?.market} shareButton={<ShareButton onClick={sharePreparedMessage} />} />
         <div style={{padding: '1rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem'}}>
           {data?.products.map((product: any) => (
             <ProductPreviewCard key={product.id} product={product} />
