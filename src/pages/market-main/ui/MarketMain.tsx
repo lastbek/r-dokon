@@ -7,6 +7,7 @@ import { useTelegramWebApp } from '@/shared/hooks/useTelegramWebApp';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from "@tanstack/react-query"
 import { simpleLoginRequest } from "@/shared/api/simple-login"
+import './MarketMain.scss'
 
 export const MarketMain = () => {
 
@@ -40,7 +41,7 @@ export const MarketMain = () => {
     }
   })
   return (
-    <>
+    <div className="market-main">
       {isPending ? <p>Loading...</p> :
         <>
         <MarketInfo shareButton={<ShareButton />} />
@@ -54,6 +55,6 @@ export const MarketMain = () => {
         <MarketContactFooter />
         </>
       }
-    </>
+    </div>
   )
 }
