@@ -29,8 +29,10 @@ interface TelegramWebApp {
   };
 }
 
-export const useTelegramWebApp = (): TelegramWebApp | null => {
-
+export const useTelegramWebApp = (): any => {
+  if (!window.Telegram) {
+    return null;
+  }
   tgWebApp.ready();
 
   return tgWebApp;

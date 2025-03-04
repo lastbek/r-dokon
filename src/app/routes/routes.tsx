@@ -1,8 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom'
 import { MarketMain } from '@/pages/market-main'
 import { MarketProduct } from '@/pages/market-product'
+import { NotFound } from '@/pages/not-found'
 
-const router = createBrowserRouter([
+const routes = createBrowserRouter([
   {
     path: '/',
     element: <MarketMain />
@@ -10,7 +11,15 @@ const router = createBrowserRouter([
   {
     path: '/product/:id',
     element: <MarketProduct />
+  }, 
+  {
+    path: '*',
+    element: <NotFound />
+  },
+  {
+    path: '/not-found',
+    element: <NotFound />
   }
 ])
 
-export default router
+export default routes

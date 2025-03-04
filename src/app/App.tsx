@@ -1,14 +1,14 @@
 import { RouterProvider } from 'react-router-dom'
-import router from './routes/routes'
-import { useTelegramWebApp } from '@/shared/hooks/useTelegramWebApp';
+import routes from './routes/routes'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { queryClient } from '@/shared/config/query-client'
 
 function App() {
-  // console.log(window.Telegram.WebApp.initDataUnsafe?.start_param)
-  const tgWebApp = useTelegramWebApp();
-
-  console.log('Your telegram WebApp version:', tgWebApp?.initDataUnsafe?.start_param)
+  
   return (
-    <RouterProvider router={router} />
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={routes} />
+    </QueryClientProvider>
   )
 }
 
